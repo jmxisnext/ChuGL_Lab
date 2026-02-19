@@ -1,0 +1,2 @@
+EX_ID,Title,Domain,Hypothesis,IndependentVars,BaselineRef,Status,SpecPath,CreatedAt
+EX-001,Filter Dynamics (1st vs 2nd Order),Control Dynamics,,,03_EXPERIMENTS\EX-000_Baseline\CFG-000_baseline.txt,Planned,G:\My Drive\Research\ChuGL_Lab\Audio-Driven Dynamical Systems (ChuGL Research Lab)\03_EXPERIMENTS\EX-001_Filter_Dynamics_1st_vs_2nd_Order\EXPERIMENT.md,2026-02-19 10:27:16

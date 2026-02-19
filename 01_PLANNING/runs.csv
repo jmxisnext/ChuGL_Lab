@@ -1,0 +1,2 @@
+Run_ID,EX_ID,DateTimeLocal,Build_ID,Config_ID,Input,Seed,Duration_s,Notes,LogPath,VideoPath
+EX-001-R001,EX-001,2026-02-19 10:29:33,,,,FIXED,60,"Run container created; awaiting harness + logging implementation.",G:\My Drive\Research\ChuGL_Lab\Audio-Driven Dynamical Systems (ChuGL Research Lab)\04_DATA\Runs\EX-001-R001\EX-001-R001_log.csv,G:\My Drive\Research\ChuGL_Lab\Audio-Driven Dynamical Systems (ChuGL Research Lab)\05_MEDIA\Captures\EX-001-R001\EX-001-R001_capture.mp4

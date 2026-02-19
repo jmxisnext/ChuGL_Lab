@@ -1,0 +1,27 @@
+==================================================
+EX-000 BASELINE CONFIGURATION (FROZEN REFERENCE)
+==================================================
+
+Movement Model:
+- Inertial Drift Navigation
+
+Visual Model:
+- Minimal Geometric Primitives
+
+Event Topology:
+- Expanding Pulses Only
+- Continuous Fields Disabled
+
+Signal Source:
+- Procedural Deterministic Test Signal
+
+Control Dynamics:
+- Static (No Elastic Filtering Yet)
+
+Notes:
+Frozen reference frame for all experiments.
+Do NOT modify this file. Clone for variants.
+
+VARIANT NOTES:
+- (TODO: describe changes for this experiment)
+
