@@ -1,0 +1,13 @@
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# binaries/debug
+*.exe
+*.dll
+*.pdb
+*.obj
+
+# temp/logs (adjust later once outputs are formalized)
+*.log
