@@ -1,5 +1,3 @@
-<<< "EX-001-R001 start", now >>>;
-
 // -----------------------------
 // Invariants
 // -----------------------------
@@ -10,17 +8,19 @@
 (RUN_SECONDS * FPS) $ int => int TOTAL_FRAMES;
 
 // Run identity (protocol critical)
-"EX-001-R002" => string RUN_ID;
+"EX-001-R003" => string RUN_ID;
 
 
 
+
+<<< RUN_ID + " start", now >>>;
 // -----------------------------
 // Config (variable isolation)
 // -----------------------------
 "CFG-001-DYN_ORDER" => string CFG_ID;
 
 // 1 = first-order dynamics, 2 = second-order spring-damper
-2 => int DYNAMICS_ORDER;
+1 => int DYNAMICS_ORDER;
 
 // 1st-order parameter
 2.0 => float VEL_ALPHA;   // relaxation rate
@@ -54,7 +54,7 @@
 FileIO log;
 "log open failed" => string LOG_ERR;
 
-if( !log.open("03_EXPERIMENTS/EX-001_Filter_Dynamics_1st_vs_2nd_Order/EX-001-R002/runs/EX-001-R002/log.csv", FileIO.WRITE ) )
+if( !log.open("03_EXPERIMENTS/EX-001_Filter_Dynamics_1st_vs_2nd_Order/EX-001-R003/runs/EX-001-R003/log.csv", FileIO.WRITE ) )
 {
     <<< LOG_ERR >>>;
     me.exit();
@@ -137,10 +137,8 @@ for( 0 => int frame; frame < TOTAL_FRAMES; frame++ )
     DT::second => now;
 }
 
+<<< RUN_ID + " end", now >>>;
+
 log.close();
-
-<<< "EX-001-R001 end", now >>>;
-
-
 
 
