@@ -8,7 +8,7 @@
 (RUN_SECONDS * FPS) $ int => int TOTAL_FRAMES;
 
 // Run identity (protocol critical)
-"EX-001-R003" => string RUN_ID;
+"EX-001-R006" => string RUN_ID;
 
 
 
@@ -20,14 +20,14 @@
 "CFG-001-DYN_ORDER" => string CFG_ID;
 
 // 1 = first-order dynamics, 2 = second-order spring-damper
-1 => int DYNAMICS_ORDER;
+2 => int DYNAMICS_ORDER;
 
 // 1st-order parameter
 2.0 => float VEL_ALPHA;   // relaxation rate
 
 // 2nd-order parameters (spring-damper)
 8.0 => float OMEGA;       // natural frequency (rad/s)
-0.9 => float ZETA;        // damping ratio
+1.5 => float ZETA;        // damping ratio
 // -----------------------------
 // State Variables (deterministic)
 // -----------------------------
@@ -54,7 +54,7 @@
 FileIO log;
 "log open failed" => string LOG_ERR;
 
-if( !log.open("03_EXPERIMENTS/EX-001_Filter_Dynamics_1st_vs_2nd_Order/EX-001-R003/runs/EX-001-R003/log.csv", FileIO.WRITE ) )
+if( !log.open("03_EXPERIMENTS/EX-001_Filter_Dynamics_1st_vs_2nd_Order/EX-001-R006/runs/EX-001-R006/log.csv", FileIO.WRITE ) )
 {
     <<< LOG_ERR >>>;
     me.exit();
@@ -140,5 +140,10 @@ for( 0 => int frame; frame < TOTAL_FRAMES; frame++ )
 <<< RUN_ID + " end", now >>>;
 
 log.close();
+
+
+
+
+
 
 
