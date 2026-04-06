@@ -1,0 +1,29 @@
+# ChucK / ChuGL
+*.wav
+*.aiff
+*.flac
+*.mp3
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build / compiled output
+*.o
+*.out
+build/
