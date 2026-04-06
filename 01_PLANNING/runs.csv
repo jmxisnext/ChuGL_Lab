@@ -1,2 +1,10 @@
-Run_ID,EX_ID,DateTimeLocal,Build_ID,Config_ID,Input,Seed,Duration_s,Notes,LogPath,VideoPath
-EX-001-R001,EX-001,2026-02-19 10:29:33,,,,FIXED,60,"Run container created; awaiting harness + logging implementation.",G:\My Drive\Research\ChuGL_Lab\Audio-Driven Dynamical Systems (ChuGL Research Lab)\04_DATA\Runs\EX-001-R001\EX-001-R001_log.csv,G:\My Drive\Research\ChuGL_Lab\Audio-Driven Dynamical Systems (ChuGL Research Lab)\05_MEDIA\Captures\EX-001-R001\EX-001-R001_capture.mp4
+Run_ID,EX_ID,DateTimeLocal,Config_ID,Input,Seed,Duration_s,DYNAMICS_ORDER,OMEGA,ZETA,Notes,LogPath
+EX-001-R001,EX-001,2026-02-19 10:29:33,,procedural,FIXED,60,1,12.0,1.0,1st-order baseline,03_EXPERIMENTS/EX-001_Filter_Dynamics_1st_vs_2nd_Order/EX-001-R001/runs/EX-001-R001/log.csv
+EX-001-R002,EX-001,,,procedural,FIXED,60,2,12.0,1.0,2nd-order baseline,03_EXPERIMENTS/EX-001_Filter_Dynamics_1st_vs_2nd_Order/EX-001-R002/runs/EX-001-R002/log.csv
+EX-001-R003,EX-001,,,procedural,FIXED,60,1,12.0,1.0,1st-order rerun (corrected),03_EXPERIMENTS/EX-001_Filter_Dynamics_1st_vs_2nd_Order/EX-001-R003/runs/EX-001-R003/log.csv
+EX-001-R004,EX-001,,,procedural,FIXED,60,2,12.0,0.2,ZETA sweep: underdamped,03_EXPERIMENTS/EX-001_Filter_Dynamics_1st_vs_2nd_Order/EX-001-R004/runs/EX-001-R004/log.csv
+EX-001-R005,EX-001,,,procedural,FIXED,60,2,12.0,1.0,ZETA sweep: critical,03_EXPERIMENTS/EX-001_Filter_Dynamics_1st_vs_2nd_Order/EX-001-R005/runs/EX-001-R005/log.csv
+EX-001-R006,EX-001,,,procedural,FIXED,60,2,12.0,1.5,ZETA sweep: overdamped,03_EXPERIMENTS/EX-001_Filter_Dynamics_1st_vs_2nd_Order/EX-001-R006/runs/EX-001-R006/log.csv
+EX-001-R007,EX-001,,,procedural,FIXED,60,2,2.0,1.0,OMEGA sweep: low freq,03_EXPERIMENTS/EX-001_Filter_Dynamics_1st_vs_2nd_Order/EX-001-R007/runs/EX-001-R007/log.csv
+EX-001-R008,EX-001,,,procedural,FIXED,60,2,6.0,1.0,OMEGA sweep: mid freq,03_EXPERIMENTS/EX-001_Filter_Dynamics_1st_vs_2nd_Order/EX-001-R008/runs/EX-001-R008/log.csv
+EX-001-R009,EX-001,,,procedural,FIXED,60,2,12.0,1.0,OMEGA sweep: high freq,03_EXPERIMENTS/EX-001_Filter_Dynamics_1st_vs_2nd_Order/EX-001-R009/runs/EX-001-R009/log.csv

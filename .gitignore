@@ -7,7 +7,8 @@ Thumbs.db
 *.exe
 *.dll
 *.pdb
-*.obj
 
-# temp/logs (adjust later once outputs are formalized)
+# temp
 *.log
+__pycache__/
+*.pyc

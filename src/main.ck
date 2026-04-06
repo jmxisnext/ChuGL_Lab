@@ -1,3 +1,16 @@
+// =============================================================================
+// main.ck — Headless dynamics simulation with CSV logging
+//
+// Usage:
+//   chuck src/main.ck:RUN_ID:DYNAMICS_ORDER:OMEGA:ZETA
+//
+// Examples:
+//   chuck src/main.ck:EX-001-R010:2:12.0:1.0
+//   chuck src/main.ck:EX-001-R011:1:0:2.0     (1st-order ignores OMEGA)
+//
+// If no args provided, defaults are used (useful for quick testing).
+// =============================================================================
+
 // -----------------------------
 // Invariants
 // -----------------------------
@@ -7,32 +20,45 @@
 1.0 / FPS     => float DT;
 (RUN_SECONDS * FPS) $ int => int TOTAL_FRAMES;
 
-// Run identity (protocol critical)
-"EX-001-R009" => string RUN_ID;
+// -----------------------------
+// Config — from args or defaults
+// -----------------------------
 
+// Defaults
+"EX-TEST" => string RUN_ID;
+2         => int    DYNAMICS_ORDER;
+12.0      => float  OMEGA;
+1.0       => float  ZETA;
+2.0       => float  VEL_ALPHA;   // 1st-order relaxation rate
 
+if( me.args() >= 1 ) me.arg(0) => RUN_ID;
+if( me.args() >= 2 ) Std.atoi(me.arg(1)) => DYNAMICS_ORDER;
+if( me.args() >= 3 ) Std.atof(me.arg(2)) => OMEGA;
+if( me.args() >= 4 ) Std.atof(me.arg(3)) => ZETA;
 
-
+<<< "RUN_ID=" + RUN_ID + " ORDER=" + DYNAMICS_ORDER +
+    " OMEGA=" + OMEGA + " ZETA=" + ZETA >>>;
 <<< RUN_ID + " start", now >>>;
+
 // -----------------------------
-// Config (variable isolation)
+// Log path (auto-generated from RUN_ID)
 // -----------------------------
-"CFG-001-DYN_ORDER" => string CFG_ID;
 
-// 1 = first-order dynamics, 2 = second-order spring-damper
-2 => int DYNAMICS_ORDER;
+"03_EXPERIMENTS/EX-001_Filter_Dynamics_1st_vs_2nd_Order/" +
+    RUN_ID + "/runs/" + RUN_ID + "/log.csv" => string LOG_PATH;
 
-// 1st-order parameter
-2.0 => float VEL_ALPHA;   // relaxation rate
+FileIO log;
+if( !log.open(LOG_PATH, FileIO.WRITE) )
+{
+    <<< "ERROR: cannot open " + LOG_PATH >>>;
+    me.exit();
+}
 
-// 2nd-order parameters (spring-damper)
-12.0 => float OMEGA;       // natural frequency (rad/s)
-1.0 => float ZETA;        // damping ratio
+log <= "Run_ID,t,pos_x,pos_y,pos_z,vel_x,vel_y,vel_z,Drive,Snap,Glare\n";
+
 // -----------------------------
 // State Variables (deterministic)
 // -----------------------------
-
-
 
 0.0 => float pos_x;
 0.0 => float pos_y;
@@ -42,27 +68,9 @@
 0.0 => float vel_y;
 0.0 => float vel_z;
 
-// Synthetic control signals (NO randomness)
 0.0 => float Drive;
 0.0 => float Snap;
 0.0 => float Glare;
-
-// -----------------------------
-// Logging Setup
-// -----------------------------
-
-FileIO log;
-"log open failed" => string LOG_ERR;
-
-if( !log.open("03_EXPERIMENTS/EX-001_Filter_Dynamics_1st_vs_2nd_Order/EX-001-R009/runs/EX-001-R009/log.csv", FileIO.WRITE ) )
-{
-    <<< LOG_ERR >>>;
-    me.exit();
-}
-
-// Write deterministic schema header (overwrite-safe)
-log <= "Run_ID,t,pos_x,pos_y,pos_z,vel_x,vel_y,vel_z,Drive,Snap,Glare\n";
-// CFG_ID=" + CFG_ID + " DYNAMICS_ORDER=" + DYNAMICS_ORDER + "\n";
 
 // -----------------------------
 // Deterministic Control Law
@@ -70,20 +78,17 @@ log <= "Run_ID,t,pos_x,pos_y,pos_z,vel_x,vel_y,vel_z,Drive,Snap,Glare\n";
 
 fun void update_controls(float time)
 {
-    // Fully deterministic functions of time
     Math.sin(time * 0.5)  => Drive;
     Math.cos(time * 0.25) => Snap;
     (Drive * Snap)        => Glare;
 }
 
 // -----------------------------
-// Deterministic Dynamics
+// Dynamics
 // -----------------------------
 
 fun void update_dynamics_first_order()
 {
-    // vel relaxes toward control (low-pass on velocity)
-    // dv/dt = alpha*(u - v)
     (VEL_ALPHA * (Drive - vel_x) * DT) +=> vel_x;
     (VEL_ALPHA * (Snap  - vel_y) * DT) +=> vel_y;
     (VEL_ALPHA * (Glare - vel_z) * DT) +=> vel_z;
@@ -95,11 +100,7 @@ fun void update_dynamics_first_order()
 
 fun void update_dynamics_second_order()
 {
-    // spring-damper on position tracking control
     // x'' + 2*zeta*omega*x' + omega^2*x = omega^2*u
-    // where u is Drive/Snap/Glare
-
-    // accel = omega^2*(u - x) - 2*zeta*omega*v
     (OMEGA*OMEGA*(Drive - pos_x) - 2.0*ZETA*OMEGA*vel_x) => float ax;
     (OMEGA*OMEGA*(Snap  - pos_y) - 2.0*ZETA*OMEGA*vel_y) => float ay;
     (OMEGA*OMEGA*(Glare - pos_z) - 2.0*ZETA*OMEGA*vel_z) => float az;
@@ -117,8 +118,10 @@ fun void update_dynamics()
 {
     if( DYNAMICS_ORDER == 1 ) update_dynamics_first_order();
     else                      update_dynamics_second_order();
-}// -----------------------------
-// Frame Loop (authoritative)
+}
+
+// -----------------------------
+// Frame Loop
 // -----------------------------
 
 for( 0 => int frame; frame < TOTAL_FRAMES; frame++ )
@@ -133,20 +136,8 @@ for( 0 => int frame; frame < TOTAL_FRAMES; frame++ )
            vel_x + "," + vel_y + "," + vel_z + "," +
            Drive + "," + Snap + "," + Glare + "\n";
 
-    
     DT::second => now;
 }
 
 <<< RUN_ID + " end", now >>>;
-
 log.close();
-
-
-
-
-
-
-
-
-
-
