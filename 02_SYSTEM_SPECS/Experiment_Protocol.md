@@ -10,13 +10,21 @@
 ## Naming Conventions
 - Experiment: EX-###
 - Run: EX-###-R###
-- Config: CFG-###-*
+- Config: passed via CLI args (see src/main.ck)
+- Visualization: VIS-### (visual experiments), MX-### (mashups)
 
-## Capture Protocol
-- Resolution: 1920x1080
-- FPS: 60
-- Start offset: +3s (optional)
-- Input: autopilot/no-input for baseline experiments
+## Headless Simulation Runs
+- Use `chuck src/main.ck:RUN_ID:ORDER:OMEGA:ZETA`
+- Output: CSV log at `03_EXPERIMENTS/.../RUN_ID/runs/RUN_ID/log.csv`
+
+## ChuGL Visual Runs
+- Use `chuck src/dynamics.ck src/features.ck src/vis_<name>.ck`
+- Real-time rendering at native FPS
+- Optional live audio via `:live` arg
 
 ## Logging
-- Write CSV log with Run_ID, t, pos, vel, and control fields (Drive/Snap/Glare).
+- CSV schema: Run_ID, t, pos_x, pos_y, pos_z, vel_x, vel_y, vel_z, Drive, Snap, Glare
+
+## Analysis
+- Use `python analyze.py compare R002 R003` or `python analyze.py sweep zeta R004:0.2 R005:1.0 R006:1.5`
+- Output: CSV metrics to `01_PLANNING/`

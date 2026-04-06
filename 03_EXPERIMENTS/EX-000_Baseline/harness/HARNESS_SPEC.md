@@ -4,19 +4,18 @@
 Provide deterministic conditions for all experiments (no human input variance).
 
 ## Determinism Rules
-- Procedural test signal only (no file I/O)
-- Fixed seed
-- Fixed run duration (default 60s)
-- Autopilot camera + movement (no keyboard/mouse)
-- Fixed spawn schedule (no RNG or fixed RNG seed)
+- Procedural test signal only (sin/cos of time)
+- Fixed seed (deterministic — no RNG)
+- Fixed run duration (default 60s at 60 FPS)
+- No human input during headless runs
 
 ## Outputs per Run
-- CSV log: t, pos, vel, Drive/Snap/Glare (even if placeholders at first)
-- Meta JSON: Run_ID, commit hash, config ID, seed, duration
-- Capture MP4: fixed resolution/FPS
+- CSV log: Run_ID, t, pos, vel, Drive/Snap/Glare
 
-## Next Implementation Steps
-1) Implement procedural audio generator (DeterministicSignal)
-2) Implement feature extraction stubs for Drive/Snap/Glare (or placeholders)
-3) Implement autopilot path generator (Spline/Parametric)
-4) Wire logger and meta writer to Run_ID paths
+## Implementation Status
+1. Procedural control signals (Drive/Snap/Glare) — DONE (src/main.ck, src/features.ck)
+2. Feature extraction from live audio — DONE (src/features.ck, live mode)
+3. Dynamics engine (1st + 2nd order) — DONE (src/dynamics.ck)
+4. CSV logger — DONE (src/main.ck)
+5. ChuGL visual layer — DONE (src/vis_orbits.ck, src/vis_explorer.ck)
+6. FM sonification — DONE (src/mx006_phase_organ.ck)

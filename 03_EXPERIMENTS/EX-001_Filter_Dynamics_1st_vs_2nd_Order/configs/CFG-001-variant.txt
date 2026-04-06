@@ -1,27 +1,19 @@
 ==================================================
-EX-000 BASELINE CONFIGURATION (FROZEN REFERENCE)
+EX-001 CONFIGURATION — Filter Dynamics Variant
 ==================================================
 
 Movement Model:
-- Inertial Drift Navigation
-
-Visual Model:
-- Minimal Geometric Primitives
-
-Event Topology:
-- Expanding Pulses Only
-- Continuous Fields Disabled
+- Spring-Damper (2nd order) or Velocity Relaxation (1st order)
 
 Signal Source:
-- Procedural Deterministic Test Signal
+- Procedural Deterministic: Drive=sin(0.5t), Snap=cos(0.25t), Glare=Drive*Snap
 
 Control Dynamics:
-- Static (No Elastic Filtering Yet)
+- 1st order: dv/dt = alpha*(u - v), alpha=2.0
+- 2nd order: x'' + 2*zeta*omega*x' + omega^2*x = omega^2*u
 
-Notes:
-Frozen reference frame for all experiments.
-Do NOT modify this file. Clone for variants.
+Parameter Sweeps:
+- ZETA sweep (R004-R006): 0.2, 1.0, 1.5 at OMEGA=12.0
+- OMEGA sweep (R007-R009): 2.0, 6.0, 12.0 at ZETA=1.0
 
-VARIANT NOTES:
-- (TODO: describe changes for this experiment)
-
+Run via: chuck src/main.ck:RUN_ID:ORDER:OMEGA:ZETA
