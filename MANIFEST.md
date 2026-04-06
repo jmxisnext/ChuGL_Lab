@@ -486,6 +486,22 @@ Built-in **Dear ImGui** integration. All methods on the static `UI` class.
 | INT-003 | OSC Control Surface | Receive omega/zeta/drive from external controller (TouchDesigner, Max, phone app) | OscIn, dynamics, visuals | Low |
 | INT-004 | Multi-Shred Ensemble | Multiple sporked shreds each running independent dynamics; cross-coupled via Events | spork, Event, multiple GGen trees | Medium |
 
+### Tier 6 — Mad Scientist Mashups
+
+Cross-tier fusions. Each combines 2-4 ideas into something weirder than any single experiment.
+
+| ID | Name | Sources | What | Effort |
+|----|------|---------|------|--------|
+| MX-001 | The Flesh Raymarcher | VIS-011 + VIS-009 + AUD-001 | Live mic drives raymarched SDF scene where each shape is a spring-damper. Centroid controls smooth-union blend (high freq = sharp, low = melting). Flux drives surface ripples. RMS = heartbeat. | High |
+| MX-002 | Cymatics Orchestra | VIS-007 + VIS-013 + AUD-002 | Chladni plate nodes become Kuramoto-coupled oscillators, each driving an STK instrument. Aggregate spectrum feeds back to shift plate mode frequency. Self-composing system. | High |
+| MX-003 | Shattered Warp Choir | VIS-014 + VIS-015 + AUD-003 | Domain-warped Voronoi cells where each cell is a resonant filter voice. Cell area = frequency, velocity = Q. Audio onsets shatter cells; geometry sings and singing reshapes geometry. | Medium-High |
+| MX-004 | The Spacetime Instrument | INT-002 + VIS-005 + VIS-012 + AUD-005 | Gamepad morphs between strange attractors. Trajectory drives FM synthesis AND warps all geometry via vertex shader. Stick movements create gravitational wave ripples. Sound = shape of space. | High |
+| MX-005 | The Living Substrate | VIS-010 + VIS-006 + VIS-013 + AUD-004 | GPU reaction-diffusion terrain with chemotaxis particles. Kuramoto oscillator lattice controls R-D regime shifts. Particle trajectories seed LiSa grains. System grows its own soundtrack. | Very High |
+| MX-006 | Phase Space Organ | VIS-003 + AUD-005 + VIS-001 + INT-001 | Phase portrait as GLines trails. Each point is an FM voice (pos->carrier, vel->modulator, accel->mod index). You hear the spiral's shape. Acceleration drives bloom. UI sliders for exploration. | Medium |
+| MX-007 | Boids in a Bottle | VIS-006 + VIS-011 + AUD-001 + VIS-001 | GPU boid flock inside a raymarched SDF container that morphs with audio. Boids bounce off SDF boundary. Container shrinks on loud transients — flock panics, screen erupts in bloom. | High |
+
+**Build order:** MX-006 first (validates core pipeline), then MX-003 (shader + audio), then branch into compute (#5, #7) or SDF (#1, #4).
+
 ### Cross-Modal Mapping Principles
 
 | Level | Mapping | Example |
