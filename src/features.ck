@@ -32,7 +32,7 @@ public class Features
     0.0 => float raw_rms;
     0.0 => float raw_centroid;
     0.0 => float raw_flux;
-    0.0 => float prev_flux;
+    float prev_spectrum[0];  // previous frame's magnitude spectrum for flux
     0.8 => float smooth;  // EMA coefficient (higher = smoother)
 
     // Enable live audio input
@@ -86,18 +86,26 @@ public class Features
         smooth * raw_centroid + (1.0 - smooth) * centroid => raw_centroid;
         (raw_centroid * 2.0 - 1.0) => Snap;  // map to -1..1
 
-        // Spectral flux -> Glare (-1 to 1)
+        // Spectral flux -> Glare (0 to 1)
         0.0 => float flux;
-        for( 0 => int i; i < blob.fvals().size(); i++ )
+        blob.fvals().size() => int fsize;
+
+        // Allocate prev_spectrum on first call; skip flux for that frame
+        if( prev_spectrum.size() != fsize )
+            new float[fsize] @=> prev_spectrum;
+        else
         {
-            blob.fvals()[i] - prev_flux +=> flux;
+            for( 0 => int i; i < fsize; i++ )
+            {
+                Math.fabs(blob.fvals()[i] - prev_spectrum[i]) +=> flux;
+            }
+            flux / fsize => flux;
         }
-        Math.fabs(flux) / blob.fvals().size() => flux;
         smooth * raw_flux + (1.0 - smooth) * flux => raw_flux;
         Math.min(raw_flux * 8.0, 1.0) => Glare;
 
-        // Store for next frame
-        if( blob.fvals().size() > 0 )
-            blob.fvals()[0] => prev_flux;
+        // Copy current spectrum for next frame
+        for( 0 => int i; i < fsize; i++ )
+            blob.fvals()[i] => prev_spectrum[i];
     }
 }
