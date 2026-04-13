@@ -54,8 +54,6 @@ UI_Float ui_omega;
 UI_Float ui_zeta;
 UI_Float ui_alpha;
 UI_Int   ui_order;
-UI_Bool  ui_reset;
-UI_Bool  ui_live;
 
 dyn.omega  => ui_omega.val;
 dyn.zeta   => ui_zeta.val;

@@ -82,7 +82,6 @@ fun vec3 velColor(float vmag)
 // --- Axis lines (subtle reference) ---
 GLines xAxis --> GG.scene();
 GLines yAxis --> GG.scene();
-GLines zAxis --> GG.scene();
 
 xAxis.positions([@(-2.0, 0.0), @(2.0, 0.0)]);
 xAxis.color(@(0.15, 0.05, 0.05));
